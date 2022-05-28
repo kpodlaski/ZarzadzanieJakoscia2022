@@ -16,18 +16,17 @@ import org.mockito.Mock;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.*;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-
-class AccountManagerTest {
+public class AccountManagerCucumber {
     AccountManager aM = new AccountManager();
     @Mock
     DAO mockDao;
     @Mock
     BankHistory mockHistory;
-
 
 
     @BeforeEach
@@ -51,36 +50,6 @@ class AccountManagerTest {
     void tearDown() {
     }
 
-    @Test
-    void paymentInAllShouldBeOk() throws SQLException, NoSuchAccount {
-        User user = new User();
-        double ammount = 100;
-        int accountId = 2;
-        String desc = "AAAA";
-        Account acc = mock(Account.class);
-        when(mockDao.findAccountById(anyInt())).thenReturn(acc);
-        when(mockDao.updateAccountState(acc)).thenReturn(true);
-        when(acc.income(ammount)).thenReturn(true);
-        boolean result = aM.paymentIn(user,ammount,desc,accountId);
-        assertTrue(result);
-        verify(mockDao, times(1)).findAccountById(anyInt());
-        verify(mockDao, times(1)).updateAccountState(acc);
-        verify(acc,times(1)).income(ammount);
-        //assertEquals(200, acc.getAmmount());
-        //TODO, TEST if logHistory had appropriate arguments
-    }
-
-    @Test
-    void paymentInAllSQLException() throws SQLException {
-        when(mockDao.findAccountById(anyInt())).thenThrow(SQLException.class);
-        assertThrows(SQLException.class, () -> {aM.paymentIn(new User(),100,"",12);});
-    }
-
-    @Test
-    void paymentInAccountDontExist() throws SQLException, NoSuchAccount {
-        when(mockDao.findAccountById(anyInt())).thenReturn(null);
-        assertThrows(NoSuchAccount.class, () -> {aM.paymentIn(new User(),100,"",12);});
-    }
 
     @Given("We have user {string} with id: {int}")
     void givenWeHaveUser(String userName, int userId) throws SQLException {
