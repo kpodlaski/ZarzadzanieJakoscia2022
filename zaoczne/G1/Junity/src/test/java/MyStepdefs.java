@@ -97,15 +97,17 @@ public class MyStepdefs {
         when(mockAuth.canInvokeOperation(any(Operation.class),any(User.class))).thenReturn(true);
     }
 
-    @When("{string} make transfer from acc: {int} to acc: {int} with ammount: {int}")
-    public void makeTransferFromAccToAccWithAmmount(String userName, int srcAccId, int destAccId, int value) throws SQLException, OperationIsNotAllowedException {
+    @When("{string} make transfer from acc: {int} to acc: {int} with ammount: {double}")
+    public void makeTransferFromAccToAccWithAmmount(String userName, int srcAccId, int destAccId, double value) throws SQLException, OperationIsNotAllowedException {
         User user = mockDao.findUserByName(userName);
         aM.internalPayment(user,value,"Some desription",srcAccId,destAccId);
     }
 
-    @Then("account: {int} value: {int} pln")
-    public void accountValuePln(int accountId, int value) throws SQLException {
+    @Then("account: {int} value: {double} pln")
+    public void accountValuePln(int accountId, double value) throws SQLException {
         Account acc = mockDao.findAccountById(accountId);
-        assertEquals(value, acc.getAmmount());
+        assertEquals(value, acc.getAmmount(),0.001);
     }
 }
+
+
