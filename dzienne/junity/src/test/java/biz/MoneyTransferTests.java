@@ -101,7 +101,6 @@ public class MoneyTransferTests {
     @Then("account:{int} value:{double} pln")
     public void checkAccountAmount(int accId, double value) throws SQLException {
         Account acc = daoMock.findAccountById(accId);
-        System.out.println(accId);
         assertEquals(acc.getAmmount(),value,0.001);
     }
 }
