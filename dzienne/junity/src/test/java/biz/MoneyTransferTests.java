@@ -98,7 +98,7 @@ public class MoneyTransferTests {
         aM.internalPayment(u, amount, "Opis", srcId, dstId);
     }
 
-    @Then("account:{id} value:{double} pln")
+    @Then("account:{int} value:{double} pln")
     public void checkAccountAmount(int accId, double value) throws SQLException {
         Account acc = daoMock.findAccountById(accId);
         System.out.println(accId);
