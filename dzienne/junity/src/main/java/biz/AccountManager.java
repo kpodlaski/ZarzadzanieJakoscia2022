@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * Created by Krzysztof Podlaski on 04.03.2018.
  */
 public class AccountManager {
-    DAO dao;
+    private DAO dao;
     BankHistory history;
     AuthenticationManager auth;
     InterestOperator interestOperator;
